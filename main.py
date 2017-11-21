@@ -1,8 +1,6 @@
 from database import *
 import numpy as np
 
-
-
 conn=connection()
 
 #test database
@@ -35,12 +33,25 @@ n_items = len(item)
 
 utility = np.zeros((n_users, n_items))
 for r in rating:
-	var_user_id=0
-	var_item_id=1
-	var_rating=2
-	var_timestamp=3
-	utility[r[var_user_id] - 1][r[var_item_id] - 1] = r[var_rating]
+	base_user_id=0
+	base_item_id=1
+	base_rating=2
+	base_timestamp=3
+	utility[r[base_user_id] - 1][r[base_item_id] - 1] = r[base_rating]
  
 
-   
-print(utility)
+test = np.zeros((n_users, n_items))
+for r in rating_test:
+	test_user_id=0
+	test_item_id=1
+	test_rating=2
+	test_timestamp=3
+	test[r[test_user_id] - 1][r[test_item_id] - 1] = r[test_rating]
+
+#print(utility)
+print(test)
+
+
+
+
+
