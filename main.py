@@ -1,6 +1,8 @@
 from database import *
 import numpy as np
 from sklearn.model_selection import train_test_split
+from sklearn.metrics.pairwise import pairwise_distances
+
 
 conn=connection()
 
@@ -43,7 +45,10 @@ for r in rating:
 
 # Create two user-item matrices , one for training and another for testing
 train_data, test_data = train_test_split(utility, test_size=0.25)
- 
+
+#calculate the cosine similarity
+user_similarity = pairwise_distances(train_data, metric='cosine')
+item_similarity = pairwise_distances(test_data.T, metric='cosine')
 
 
 
