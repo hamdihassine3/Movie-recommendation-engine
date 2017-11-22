@@ -1,5 +1,6 @@
 from database import *
 import numpy as np
+from sklearn.model_selection import train_test_split
 
 conn=connection()
 
@@ -20,8 +21,8 @@ item=execute_req(req_item)
 req_rating_base="""SELECT * FROM rating_base"""
 rating=execute_req(req_rating_base)
 
-req_rating_test="""SELECT * FROM rating_test"""
-rating_test=execute_req(req_rating_test)
+#req_rating_test="""SELECT * FROM rating_test"""
+#rating_test=execute_req(req_rating_test)
 
 
 n_users = len(user)
@@ -38,8 +39,16 @@ for r in rating:
 	base_rating=2
 	base_timestamp=3
 	utility[r[base_user_id] - 1][r[base_item_id] - 1] = r[base_rating]
+
+
+# Create two user-item matrices , one for training and another for testing
+train_data, test_data = train_test_split(utility, test_size=0.25)
  
 
+
+
+#on peut utiliser cette partie a la fin pour faire plus de test en utilisant la table rating_test de notre base 
+"""
 test = np.zeros((n_users, n_items))
 for r in rating_test:
 	test_user_id=0
@@ -47,9 +56,8 @@ for r in rating_test:
 	test_rating=2
 	test_timestamp=3
 	test[r[test_user_id] - 1][r[test_item_id] - 1] = r[test_rating]
+"""
 
-#print(utility)
-print(test)
 
 
 
