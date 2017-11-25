@@ -48,7 +48,7 @@ train_data, test_data = train_test_split(utility, test_size=0.25)
 
 #calculate the cosine similarity
 user_similarity = pairwise_distances(train_data, metric='cosine')
-item_similarity = pairwise_distances(test_data.T, metric='cosine')
+item_similarity = pairwise_distances(train_data.T, metric='cosine')
 
 
 
