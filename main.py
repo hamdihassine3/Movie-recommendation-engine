@@ -37,7 +37,7 @@ best_rmse=10
 best_user_prediction={}
 for i in range(5,100,5):	
 	# Create two user-item matrices , one for training and another for testing
-	train_data, test_data = train_test_split(utility, test_size=0.25)
+	train_data, test_data = train_test_split(utility, test_size=0.2)
 	
 	#calculate similarity
 	user_similarity = squareform(pdist(train_data, 'euclidean'))
