@@ -46,17 +46,17 @@ for r in rating:
 
 #we will calculate in each loop Pairwise distances of train_data, calculate user_prediction ,
 # calculate the evaluation and comare the result with the other evaluations 
-L=['braycurtis', 'canberra', 'chebyshev', 'cityblock', 'correlation', 'cosine', 'euclidean', 'hamming','minkowski','sqeuclidean']
 best_rmse=10
 best_user_prediction={}
-for i in range(10):	
+for i in range(5,10,5):	
 	# Create two user-item matrices , one for training and another for testing
 	train_data, test_data = train_test_split(utility, test_size=0.25)
 	#calculate similarity
-	user_similarity = squareform(pdist(train_data, L[i]))
+	user_similarity = squareform(pdist(train_data, 'euclidean'))
 	#calculate preduction
 	#item_prediction = predict(train_data, item_similarity, type='item')
-	user_prediction = predict(train_data, user_similarity, type='user')
+	user_prediction = predict(train_data, user_similarity, k=i)
+
 	#calcul evaluation
 	value_rmse=rmse(user_prediction, test_data)
 	if(value_rmse<best_rmse):

@@ -4,15 +4,19 @@ from math import sqrt
 
 
 # define the predict function 
-def predict(ratings, similarity, type='user'):
-    if type == 'user':
-        mean_user_rating = ratings.mean(axis=1)
-        #You use np.newaxis so that mean_user_rating has same format as ratings
-        ratings_diff = (ratings - mean_user_rating[:, np.newaxis])
-        pred = mean_user_rating[:, np.newaxis] + similarity.dot(ratings_diff) / np.array([np.abs(similarity).sum(axis=1)]).T
-    elif type == 'item':
-        pred = ratings.dot(similarity) / np.array([np.abs(similarity).sum(axis=1)])
+def predict(ratings, similarity, k=20):
+    pred = np.zeros(ratings.shape)
+
+    for i in xrange(ratings.shape[0]):
+        top_k_users = [np.argsort(similarity[:,i])[:-k-1:-1]]
+        for j in xrange(ratings.shape[1]):
+            pred[i, j] = similarity[i, :][top_k_users].dot(ratings[:, j][top_k_users]) 
+            pred[i, j] /= np.sum(np.abs(similarity[i, :][top_k_users]))
+   
+    
     return pred
+
+
 
 
 #Evaluation
